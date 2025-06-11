@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Calculator, DollarSign, Users, Clock, TrendingUp, FileText, CheckCircle } from 'lucide-react';
 
 const LawFirmCalculator = () => {
@@ -93,327 +93,419 @@ const LawFirmCalculator = () => {
     return new Intl.NumberFormat('en-US').format(Math.round(num));
   };
 
+  // Inline styles using your brand colors
+  const styles = {
+    container: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '24px',
+      background: 'linear-gradient(135deg, #f0fdfa 0%, #f1f5f9 100%)',
+      minHeight: '100vh',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    },
+    card: {
+      backgroundColor: 'white',
+      borderRadius: '12px',
+      boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+      overflow: 'hidden'
+    },
+    header: {
+      background: 'linear-gradient(135deg, #333333 0%, #008080 100%)',
+      color: 'white',
+      padding: '32px'
+    },
+    headerTitle: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      marginBottom: '16px'
+    },
+    title: {
+      fontSize: '28px',
+      fontWeight: 'bold',
+      margin: 0
+    },
+    subtitle: {
+      fontSize: '18px',
+      opacity: 0.9,
+      margin: 0
+    },
+    content: {
+      padding: '32px'
+    },
+    formGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: '32px'
+    },
+    section: {
+      backgroundColor: '#f8fafc',
+      padding: '24px',
+      borderRadius: '8px',
+      border: '1px solid #e2e8f0'
+    },
+    sectionHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginBottom: '16px',
+      fontSize: '18px',
+      fontWeight: '600',
+      color: '#334155'
+    },
+    inputGroup: {
+      marginBottom: '16px'
+    },
+    label: {
+      display: 'block',
+      fontSize: '14px',
+      fontWeight: '500',
+      marginBottom: '8px',
+      color: '#374151'
+    },
+    input: {
+      width: '100%',
+      padding: '12px',
+      border: '1px solid #d1d5db',
+      borderRadius: '6px',
+      fontSize: '16px',
+      backgroundColor: 'white',
+      transition: 'border-color 0.2s',
+      outline: 'none'
+    },
+    inputFocus: {
+      borderColor: '#008080',
+      boxShadow: '0 0 0 3px rgba(0, 128, 128, 0.1)'
+    },
+    button: {
+      width: '100%',
+      background: 'linear-gradient(135deg, #008080 0%, #333333 100%)',
+      color: 'white',
+      padding: '16px 24px',
+      borderRadius: '8px',
+      border: 'none',
+      fontSize: '18px',
+      fontWeight: '600',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '8px',
+      transition: 'transform 0.2s',
+      marginTop: '24px'
+    },
+    buttonHover: {
+      transform: 'translateY(-2px)'
+    },
+    resultsHeader: {
+      textAlign: 'center',
+      background: 'linear-gradient(135deg, #008080 0%, #10b981 100%)',
+      color: 'white',
+      padding: '32px',
+      borderRadius: '12px',
+      marginBottom: '32px'
+    },
+    resultsTitle: {
+      fontSize: '28px',
+      fontWeight: 'bold',
+      marginBottom: '16px'
+    },
+    resultsGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gap: '24px'
+    },
+    resultCard: {
+      backgroundColor: 'rgba(255,255,255,0.2)',
+      borderRadius: '8px',
+      padding: '16px',
+      textAlign: 'center'
+    },
+    resultNumber: {
+      fontSize: '24px',
+      fontWeight: 'bold'
+    },
+    resultLabel: {
+      fontSize: '14px',
+      opacity: 0.9,
+      marginTop: '4px'
+    },
+    ctaSection: {
+      background: 'linear-gradient(135deg, #333333 0%, #008080 100%)',
+      color: 'white',
+      padding: '32px',
+      borderRadius: '12px',
+      textAlign: 'center',
+      marginTop: '32px'
+    },
+    ctaTitle: {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '16px'
+    },
+    ctaText: {
+      fontSize: '16px',
+      marginBottom: '24px',
+      opacity: 0.9
+    },
+    ctaButton: {
+      backgroundColor: 'white',
+      color: '#333333',
+      padding: '12px 32px',
+      borderRadius: '8px',
+      textDecoration: 'none',
+      fontWeight: '600',
+      display: 'inline-block',
+      transition: 'background-color 0.2s'
+    },
+    ctaFeatures: {
+      fontSize: '14px',
+      marginTop: '16px',
+      opacity: 0.8
+    },
+    backButton: {
+      textAlign: 'center',
+      marginTop: '24px'
+    },
+    backLink: {
+      color: '#008080',
+      textDecoration: 'none',
+      fontWeight: '500',
+      cursor: 'pointer'
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-gradient-to-br from-teal-50 to-slate-100 min-h-screen">
-      <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+    <div style={styles.container}>
+      <div style={styles.card}>
         {/* Header */}
-        <div className="bg-gradient-to-r from-gray-800 to-teal-700 text-white p-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Calculator size={40} className="text-teal-200" />
-            <h1 className="text-3xl font-bold">Law Firm Profitability Calculator</h1>
+        <div style={styles.header}>
+          <div style={styles.headerTitle}>
+            <Calculator size={40} color="#b2dfdb" />
+            <h1 style={styles.title}>Law Firm Profitability Calculator</h1>
           </div>
-          <p className="text-teal-100 text-lg">
+          <p style={styles.subtitle}>
             Discover how much your firm could save with strategic VA delegation
           </p>
         </div>
 
-        <div className="p-8">
+        <div style={styles.content}>
           {!showResults ? (
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Input Form */}
-              <div className="space-y-6">
-                <div className="bg-teal-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                    <Users className="text-teal-600" size={24} />
-                    Firm Structure
-                  </h3>
-                  
-                  <div className="grid grid-cols-1 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Number of Partners</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="e.g., 2"
-                        onChange={(e) => handleInputChange('partners', e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Number of Associates</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="e.g., 3"
-                        onChange={(e) => handleInputChange('associates', e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Number of Paralegals</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="e.g., 2"
-                        onChange={(e) => handleInputChange('paralegals', e.target.value)}
-                      />
-                    </div>
-                  </div>
+            <div style={styles.formGrid}>
+              {/* Firm Structure */}
+              <div style={{...styles.section, backgroundColor: '#f0fdfa'}}>
+                <div style={styles.sectionHeader}>
+                  <Users color="#008080" size={24} />
+                  Firm Structure
                 </div>
-
-                <div className="bg-emerald-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                    <DollarSign className="text-emerald-600" size={24} />
-                    Hourly Rates
-                  </h3>
-                  
-                  <div className="grid grid-cols-1 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Average Partner Rate ($/hour)</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="e.g., 400"
-                        onChange={(e) => handleInputChange('partnerRate', e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Average Associate Rate ($/hour)</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="e.g., 300"
-                        onChange={(e) => handleInputChange('associateRate', e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Average Paralegal Rate ($/hour)</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="e.g., 75"
-                        onChange={(e) => handleInputChange('paralegalRate', e.target.value)}
-                      />
-                    </div>
-                  </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Number of Partners</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 2"
+                    onChange={(e) => handleInputChange('partners', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Number of Associates</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 3"
+                    onChange={(e) => handleInputChange('associates', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Number of Paralegals</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 2"
+                    onChange={(e) => handleInputChange('paralegals', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
                 </div>
               </div>
 
-              <div className="space-y-6">
-                <div className="bg-amber-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                    <Clock className="text-amber-600" size={24} />
-                    Admin Time Analysis
-                  </h3>
-                  
-                  <div className="grid grid-cols-1 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Partner Admin Hours/Week</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="e.g., 8"
-                        onChange={(e) => handleInputChange('partnerAdminHours', e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Associate Admin Hours/Week</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="e.g., 10"
-                        onChange={(e) => handleInputChange('associateAdminHours', e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium mb-3">Paralegal Admin Hours/Week</label>
-                      <input
-                        type="number"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="e.g., 5"
-                        onChange={(e) => handleInputChange('paralegalAdminHours', e.target.value)}
-                      />
-                    </div>
-                  </div>
+              {/* Hourly Rates */}
+              <div style={{...styles.section, backgroundColor: '#ecfdf5'}}>
+                <div style={styles.sectionHeader}>
+                  <DollarSign color="#10b981" size={24} />
+                  Hourly Rates
                 </div>
-
-                <div className="bg-slate-50 p-6 rounded-lg">
-                  <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                    <FileText className="text-slate-600" size={24} />
-                    Current Admin Costs
-                  </h3>
-                  
-                  <div>
-                    <label className="block text-sm font-medium mb-3">Annual Admin Staff Salaries</label>
-                    <input
-                      type="number"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="e.g., 120000"
-                      onChange={(e) => handleInputChange('adminSalaries', e.target.value)}
-                    />
-                    <p className="text-sm text-gray-600 mt-2">
-                      Total salaries for all administrative staff
-                    </p>
-                  </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Average Partner Rate ($/hour)</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 400"
+                    onChange={(e) => handleInputChange('partnerRate', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
                 </div>
-
-                <button
-                  onClick={calculateResults}
-                  className="w-full bg-gradient-to-r from-teal-600 to-gray-700 text-white py-4 px-6 rounded-lg font-semibold text-lg hover:from-teal-700 hover:to-gray-800 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
-                >
-                  <TrendingUp size={24} />
-                  Calculate My Savings
-                </button>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Average Associate Rate ($/hour)</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 300"
+                    onChange={(e) => handleInputChange('associateRate', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Average Paralegal Rate ($/hour)</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 75"
+                    onChange={(e) => handleInputChange('paralegalRate', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
               </div>
+
+              {/* Admin Time Analysis */}
+              <div style={{...styles.section, backgroundColor: '#fffbeb'}}>
+                <div style={styles.sectionHeader}>
+                  <Clock color="#f59e0b" size={24} />
+                  Admin Time Analysis
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Partner Admin Hours/Week</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 8"
+                    onChange={(e) => handleInputChange('partnerAdminHours', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Associate Admin Hours/Week</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 10"
+                    onChange={(e) => handleInputChange('associateAdminHours', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Paralegal Admin Hours/Week</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 5"
+                    onChange={(e) => handleInputChange('paralegalAdminHours', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                </div>
+              </div>
+
+              {/* Current Admin Costs */}
+              <div style={{...styles.section, backgroundColor: '#f8fafc'}}>
+                <div style={styles.sectionHeader}>
+                  <FileText color="#64748b" size={24} />
+                  Current Admin Costs
+                </div>
+                
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Annual Admin Staff Salaries</label>
+                  <input
+                    type="number"
+                    style={styles.input}
+                    placeholder="e.g., 120000"
+                    onChange={(e) => handleInputChange('adminSalaries', e.target.value)}
+                    onFocus={(e) => e.target.style.borderColor = '#008080'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                  <p style={{fontSize: '12px', color: '#6b7280', marginTop: '4px'}}>
+                    Total salaries for all administrative staff
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={calculateResults}
+                style={styles.button}
+                onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
+                onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+              >
+                <TrendingUp size={24} />
+                Calculate My Savings
+              </button>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div>
               {/* Results Header */}
-              <div className="text-center bg-gradient-to-r from-teal-500 to-emerald-600 text-white p-8 rounded-xl">
-                <h2 className="text-3xl font-bold mb-4">Your Profitability Analysis</h2>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <div className="text-2xl font-bold">{formatCurrency(results.totalAnnualSavings)}</div>
-                    <div className="text-sm opacity-90">Annual Savings Potential</div>
+              <div style={styles.resultsHeader}>
+                <h2 style={styles.resultsTitle}>Your Profitability Analysis</h2>
+                <div style={styles.resultsGrid}>
+                  <div style={styles.resultCard}>
+                    <div style={styles.resultNumber}>{formatCurrency(results.totalAnnualSavings)}</div>
+                    <div style={styles.resultLabel}>Annual Savings Potential</div>
                   </div>
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <div className="text-2xl font-bold">{Math.round(results.roi)}%</div>
-                    <div className="text-sm opacity-90">Return on Investment</div>
+                  <div style={styles.resultCard}>
+                    <div style={styles.resultNumber}>{Math.round(results.roi)}%</div>
+                    <div style={styles.resultLabel}>Return on Investment</div>
                   </div>
-                  <div className="bg-white/20 rounded-lg p-4">
-                    <div className="text-2xl font-bold">{Math.round(results.breakEvenMonths)}</div>
-                    <div className="text-sm opacity-90">Months to Break Even</div>
+                  <div style={styles.resultCard}>
+                    <div style={styles.resultNumber}>{Math.round(results.breakEvenMonths)}</div>
+                    <div style={styles.resultLabel}>Months to Break Even</div>
                   </div>
-                </div>
-              </div>
-
-              {/* Detailed Results */}
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-                  <h3 className="text-xl font-semibold text-red-800 mb-4">Current State Analysis</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span>Opportunity Cost (Admin Time):</span>
-                      <span className="font-semibold text-red-600">{formatCurrency(results.currentOpportunityCost)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Administrative Overhead:</span>
-                      <span className="font-semibold text-red-600">{formatCurrency(results.currentAdminCost)}</span>
-                    </div>
-                    <div className="border-t pt-2 flex justify-between font-bold">
-                      <span>Total Annual Cost:</span>
-                      <span className="text-red-600">{formatCurrency(results.currentOpportunityCost + results.currentAdminCost)}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                  <h3 className="text-xl font-semibold text-green-800 mb-4">With VA Integration</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span>VA Team Annual Cost:</span>
-                      <span className="font-semibold text-green-600">{formatCurrency(results.vaTeamCost)}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Billable Hours Recovered:</span>
-                      <span className="font-semibold text-green-600">{formatNumber(results.billableHoursRecovered)} hours</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Revenue Recovery:</span>
-                      <span className="font-semibold text-green-600">{formatCurrency(results.revenueRecovery)}</span>
-                    </div>
-                    <div className="border-t pt-2 flex justify-between font-bold">
-                      <span>Net Annual Benefit:</span>
-                      <span className="text-green-600">{formatCurrency(results.totalAnnualSavings)}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Monthly Breakdown */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-blue-800 mb-4">Monthly Impact</h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">{formatCurrency(results.monthlyImprovement)}</div>
-                    <div className="text-sm text-gray-600">Monthly Profit Increase</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">{Math.round(results.monthlyBillableIncrease)}</div>
-                    <div className="text-sm text-gray-600">Additional Billable Hours/Month</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">{Math.round(results.roi)}%</div>
-                    <div className="text-sm text-gray-600">Annual ROI</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Recommendations */}
-              <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-indigo-800 mb-4">Recommendations Based on Your Results</h3>
-                <div className="space-y-3">
-                  {results.totalAnnualSavings > 200000 && (
-                    <div className="flex items-start gap-3">
-                      <CheckCircle className="text-green-500 mt-1" size={20} />
-                      <div>
-                        <div className="font-semibold">High-Impact Opportunity</div>
-                        <div className="text-sm text-gray-600">Your firm shows excellent potential for VA integration with savings over $200K annually. Consider a full team approach.</div>
-                      </div>
-                    </div>
-                  )}
-                  {results.totalAnnualSavings > 100000 && results.totalAnnualSavings <= 200000 && (
-                    <div className="flex items-start gap-3">
-                      <CheckCircle className="text-blue-500 mt-1" size={20} />
-                      <div>
-                        <div className="font-semibold">Strong Business Case</div>
-                        <div className="text-sm text-gray-600">Significant savings potential. Start with 2-3 specialized VAs and expand based on success.</div>
-                      </div>
-                    </div>
-                  )}
-                  {results.totalAnnualSavings > 50000 && results.totalAnnualSavings <= 100000 && (
-                    <div className="flex items-start gap-3">
-                      <CheckCircle className="text-orange-500 mt-1" size={20} />
-                      <div>
-                        <div className="font-semibold">Good Starting Point</div>
-                        <div className="text-sm text-gray-600">Solid ROI potential. Begin with 1 specialized legal VA to test the process.</div>
-                      </div>
-                    </div>
-                  )}
-                  {results.breakEvenMonths <= 3 && (
-                    <div className="flex items-start gap-3">
-                      <CheckCircle className="text-green-500 mt-1" size={20} />
-                      <div>
-                        <div className="font-semibold">Fast Payback</div>
-                        <div className="text-sm text-gray-600">Quick break-even period indicates low risk and high reward potential.</div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
 
               {/* Call to Action */}
-              <div className="bg-gradient-to-r from-gray-800 to-teal-700 text-white p-8 rounded-xl text-center">
-                <h3 className="text-2xl font-bold mb-4">Ready to Transform Your Firm's Profitability?</h3>
-                <p className="mb-6 text-teal-100">
+              <div style={styles.ctaSection}>
+                <h3 style={styles.ctaTitle}>Ready to Transform Your Firm's Profitability?</h3>
+                <p style={styles.ctaText}>
                   Schedule a free consultation to discuss your specific needs and implementation strategy.
                 </p>
-                <div className="space-y-4">
-                  <a 
-                    href="https://link.hirevirtuals.com/widget/bookings/hire-virtuals"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-teal-50 transition-colors inline-block"
-                  >
-                    Schedule Free Consultation
-                  </a>
-                  <div className="text-sm text-teal-200">
-                    ✓ 2-Week Free Trial Available ✓ Legal-Specialized VAs ✓ Bar-Compliant Processes
-                  </div>
+                <a 
+                  href="https://link.hirevirtuals.com/widget/bookings/hire-virtuals"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={styles.ctaButton}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#f0fdfa'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = 'white'}
+                >
+                  Schedule Free Consultation
+                </a>
+                <div style={styles.ctaFeatures}>
+                  ✓ 2-Week Free Trial Available ✓ Legal-Specialized VAs ✓ Bar-Compliant Processes
                 </div>
               </div>
 
-              <div className="text-center">
-                <button
+              <div style={styles.backButton}>
+                <span
                   onClick={() => setShowResults(false)}
-                  className="text-teal-600 hover:text-teal-800 font-medium"
+                  style={styles.backLink}
                 >
                   ← Back to Calculator
-                </button>
+                </span>
               </div>
             </div>
           )}
