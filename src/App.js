@@ -10,6 +10,9 @@ const LawFirmCalculator = () => {
     associateRate: 0,
     paralegalRate: 0,
     adminSalaries: 0,
+    adminBenefits: 0,
+    officeSpace: 0,
+    adminSoftware: 0,
     partnerAdminHours: 0,
     associateAdminHours: 0,
     paralegalAdminHours: 0
@@ -29,7 +32,7 @@ const LawFirmCalculator = () => {
     const {
       partners, associates, paralegals,
       partnerRate, associateRate, paralegalRate,
-      adminSalaries,
+      adminSalaries, adminBenefits, officeSpace, adminSoftware,
       partnerAdminHours, associateAdminHours, paralegalAdminHours
     } = formData;
 
@@ -39,11 +42,8 @@ const LawFirmCalculator = () => {
     const paralegalOpportunityCost = paralegalAdminHours * paralegalRate * 52;
     const totalOpportunityCost = partnerOpportunityCost + associateOpportunityCost + paralegalOpportunityCost;
 
-    // Current administrative overhead
-    const benefits = adminSalaries * 0.25; // 25% for benefits
-    const hiddenCosts = adminSalaries * 0.15; // 15% for recruitment, training, management
-    const officeSpace = (partners + associates + paralegals) * 2000; // Estimated office space allocation
-    const currentAdminCost = adminSalaries + benefits + hiddenCosts + officeSpace;
+    // Current administrative overhead (using actual inputs)
+    const currentAdminCost = adminSalaries + adminBenefits + officeSpace + adminSoftware;
 
     // VA team costs
     const vaTeamCost = 58000; // Senior Legal VA ($25k) + Admin VA ($18k) + Customer Service VA ($15k)
@@ -98,7 +98,7 @@ const LawFirmCalculator = () => {
     container: {
       maxWidth: '1200px',
       margin: '0 auto',
-      padding: '24px',
+      padding: window.innerWidth <= 768 ? '16px' : '24px',
       background: 'linear-gradient(135deg, #f0fdfa 0%, #f1f5f9 100%)',
       minHeight: '100vh',
       fontFamily: 'system-ui, -apple-system, sans-serif'
@@ -112,35 +112,42 @@ const LawFirmCalculator = () => {
     header: {
       background: 'linear-gradient(135deg, #333333 0%, #008080 100%)',
       color: 'white',
-      padding: '32px'
+      padding: window.innerWidth <= 768 ? '24px 20px' : '32px'
     },
     headerTitle: {
       display: 'flex',
       alignItems: 'center',
-      gap: '12px',
-      marginBottom: '16px'
+      gap: window.innerWidth <= 768 ? '8px' : '12px',
+      marginBottom: '16px',
+      flexWrap: 'wrap'
     },
     title: {
-      fontSize: '28px',
+      fontSize: window.innerWidth <= 768 ? '20px' : window.innerWidth <= 1024 ? '24px' : '28px',
       fontWeight: 'bold',
-      margin: 0
+      margin: 0,
+      lineHeight: '1.2'
     },
     subtitle: {
-      fontSize: '18px',
+      fontSize: window.innerWidth <= 768 ? '14px' : '18px',
       opacity: 0.9,
-      margin: 0
+      margin: 0,
+      lineHeight: '1.4'
     },
     content: {
-      padding: '32px'
+      padding: window.innerWidth <= 768 ? '20px' : '32px'
     },
     formGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-      gap: '32px'
+      gridTemplateColumns: window.innerWidth <= 768 
+        ? '1fr' 
+        : window.innerWidth <= 1024 
+          ? 'repeat(2, 1fr)' 
+          : 'repeat(2, 1fr)',
+      gap: window.innerWidth <= 768 ? '20px' : '32px'
     },
     section: {
       backgroundColor: '#f8fafc',
-      padding: '24px',
+      padding: window.innerWidth <= 768 ? '16px' : '24px',
       borderRadius: '8px',
       border: '1px solid #e2e8f0'
     },
@@ -149,7 +156,7 @@ const LawFirmCalculator = () => {
       alignItems: 'center',
       gap: '8px',
       marginBottom: '16px',
-      fontSize: '18px',
+      fontSize: window.innerWidth <= 768 ? '16px' : '18px',
       fontWeight: '600',
       color: '#334155'
     },
@@ -158,20 +165,22 @@ const LawFirmCalculator = () => {
     },
     label: {
       display: 'block',
-      fontSize: '14px',
+      fontSize: window.innerWidth <= 768 ? '13px' : '14px',
       fontWeight: '500',
       marginBottom: '8px',
-      color: '#374151'
+      color: '#374151',
+      lineHeight: '1.4'
     },
     input: {
       width: '100%',
-      padding: '12px',
+      padding: window.innerWidth <= 768 ? '10px 12px' : '12px',
       border: '1px solid #d1d5db',
       borderRadius: '6px',
-      fontSize: '16px',
+      fontSize: window.innerWidth <= 768 ? '14px' : '16px',
       backgroundColor: 'white',
       transition: 'border-color 0.2s',
-      outline: 'none'
+      outline: 'none',
+      boxSizing: 'border-box'
     },
     inputFocus: {
       borderColor: '#008080',
@@ -181,18 +190,17 @@ const LawFirmCalculator = () => {
       width: '100%',
       background: 'linear-gradient(135deg, #008080 0%, #333333 100%)',
       color: 'white',
-      padding: '16px 24px',
+      padding: window.innerWidth <= 768 ? '14px 20px' : '16px 24px',
       borderRadius: '8px',
       border: 'none',
-      fontSize: '18px',
+      fontSize: window.innerWidth <= 768 ? '16px' : '18px',
       fontWeight: '600',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       gap: '8px',
-      transition: 'transform 0.2s',
-      marginTop: '24px'
+      transition: 'transform 0.2s'
     },
     buttonHover: {
       transform: 'translateY(-2px)'
@@ -201,67 +209,76 @@ const LawFirmCalculator = () => {
       textAlign: 'center',
       background: 'linear-gradient(135deg, #008080 0%, #10b981 100%)',
       color: 'white',
-      padding: '32px',
+      padding: window.innerWidth <= 768 ? '24px 16px' : '32px',
       borderRadius: '12px',
       marginBottom: '32px'
     },
     resultsTitle: {
-      fontSize: '28px',
+      fontSize: window.innerWidth <= 768 ? '22px' : '28px',
       fontWeight: 'bold',
       marginBottom: '16px'
     },
     resultsGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-      gap: '24px'
+      gridTemplateColumns: window.innerWidth <= 768 
+        ? '1fr' 
+        : window.innerWidth <= 1024 
+          ? 'repeat(2, 1fr)' 
+          : 'repeat(3, 1fr)',
+      gap: window.innerWidth <= 768 ? '16px' : '24px'
     },
     resultCard: {
       backgroundColor: 'rgba(255,255,255,0.2)',
       borderRadius: '8px',
-      padding: '16px',
+      padding: window.innerWidth <= 768 ? '12px' : '16px',
       textAlign: 'center'
     },
     resultNumber: {
-      fontSize: '24px',
+      fontSize: window.innerWidth <= 768 ? '20px' : '24px',
       fontWeight: 'bold'
     },
     resultLabel: {
-      fontSize: '14px',
+      fontSize: window.innerWidth <= 768 ? '12px' : '14px',
       opacity: 0.9,
-      marginTop: '4px'
+      marginTop: '4px',
+      lineHeight: '1.3'
     },
     ctaSection: {
       background: 'linear-gradient(135deg, #333333 0%, #008080 100%)',
       color: 'white',
-      padding: '32px',
+      padding: window.innerWidth <= 768 ? '24px 20px' : '32px',
       borderRadius: '12px',
       textAlign: 'center',
       marginTop: '32px'
     },
     ctaTitle: {
-      fontSize: '24px',
+      fontSize: window.innerWidth <= 768 ? '20px' : '24px',
       fontWeight: 'bold',
-      marginBottom: '16px'
+      marginBottom: '16px',
+      lineHeight: '1.3'
     },
     ctaText: {
-      fontSize: '16px',
+      fontSize: window.innerWidth <= 768 ? '14px' : '16px',
       marginBottom: '24px',
-      opacity: 0.9
+      opacity: 0.9,
+      lineHeight: '1.5'
     },
     ctaButton: {
       backgroundColor: 'white',
       color: '#333333',
-      padding: '12px 32px',
+      padding: window.innerWidth <= 768 ? '10px 24px' : '12px 32px',
       borderRadius: '8px',
       textDecoration: 'none',
       fontWeight: '600',
       display: 'inline-block',
-      transition: 'background-color 0.2s'
+      transition: 'background-color 0.2s',
+      fontSize: window.innerWidth <= 768 ? '14px' : '16px'
     },
     ctaFeatures: {
-      fontSize: '14px',
+      fontSize: window.innerWidth <= 768 ? '12px' : '14px',
       marginTop: '16px',
-      opacity: 0.8
+      opacity: 0.8,
+      lineHeight: '1.4'
     },
     backButton: {
       textAlign: 'center',
@@ -271,7 +288,8 @@ const LawFirmCalculator = () => {
       color: '#008080',
       textDecoration: 'none',
       fontWeight: '500',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      fontSize: window.innerWidth <= 768 ? '14px' : '16px'
     }
   };
 
@@ -425,37 +443,86 @@ const LawFirmCalculator = () => {
               </div>
 
               {/* Current Admin Costs */}
-              <div style={{...styles.section, backgroundColor: '#f8fafc'}}>
+              <div style={{...styles.section, backgroundColor: '#f8fafc', gridColumn: window.innerWidth <= 768 ? 'auto' : 'span 2'}}>
                 <div style={styles.sectionHeader}>
                   <FileText color="#64748b" size={24} />
-                  Current Admin Costs
+                  Current Administrative Costs (Annual)
                 </div>
                 
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Annual Admin Staff Salaries</label>
-                  <input
-                    type="number"
-                    style={styles.input}
-                    placeholder="e.g., 120000"
-                    onChange={(e) => handleInputChange('adminSalaries', e.target.value)}
-                    onFocus={(e) => e.target.style.borderColor = '#008080'}
-                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
-                  />
-                  <p style={{fontSize: '12px', color: '#6b7280', marginTop: '4px'}}>
-                    Total salaries for all administrative staff
-                  </p>
+                <div style={{display: 'grid', gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(2, 1fr)', gap: '16px'}}>
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Administrative Staff Salaries</label>
+                    <input
+                      type="number"
+                      style={styles.input}
+                      placeholder="e.g., 120000"
+                      onChange={(e) => handleInputChange('adminSalaries', e.target.value)}
+                      onFocus={(e) => e.target.style.borderColor = '#008080'}
+                      onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                    />
+                    <p style={{fontSize: '12px', color: '#6b7280', marginTop: '4px'}}>
+                      Base salaries for receptionists, legal assistants, etc.
+                    </p>
+                  </div>
+                  
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Benefits & Payroll Taxes</label>
+                    <input
+                      type="number"
+                      style={styles.input}
+                      placeholder="e.g., 30000"
+                      onChange={(e) => handleInputChange('adminBenefits', e.target.value)}
+                      onFocus={(e) => e.target.style.borderColor = '#008080'}
+                      onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                    />
+                    <p style={{fontSize: '12px', color: '#6b7280', marginTop: '4px'}}>
+                      Health, dental, 401k, FICA, unemployment (typically 25-40% of salaries)
+                    </p>
+                  </div>
+                  
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Office Space Allocation</label>
+                    <input
+                      type="number"
+                      style={styles.input}
+                      placeholder="e.g., 15000"
+                      onChange={(e) => handleInputChange('officeSpace', e.target.value)}
+                      onFocus={(e) => e.target.style.borderColor = '#008080'}
+                      onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                    />
+                    <p style={{fontSize: '12px', color: '#6b7280', marginTop: '4px'}}>
+                      Rent, utilities, furniture for admin staff workspace
+                    </p>
+                  </div>
+                  
+                  <div style={styles.inputGroup}>
+                    <label style={styles.label}>Administrative Software & Tools</label>
+                    <input
+                      type="number"
+                      style={styles.input}
+                      placeholder="e.g., 8000"
+                      onChange={(e) => handleInputChange('adminSoftware', e.target.value)}
+                      onFocus={(e) => e.target.style.borderColor = '#008080'}
+                      onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                    />
+                    <p style={{fontSize: '12px', color: '#6b7280', marginTop: '4px'}}>
+                      Practice management, billing software, phone systems
+                    </p>
+                  </div>
                 </div>
               </div>
 
-              <button
-                onClick={calculateResults}
-                style={styles.button}
-                onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-                onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-              >
-                <TrendingUp size={24} />
-                Calculate My Savings
-              </button>
+              <div style={{gridColumn: window.innerWidth <= 768 ? 'auto' : 'span 2', marginTop: '24px'}}>
+                <button
+                  onClick={calculateResults}
+                  style={styles.button}
+                  onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
+                  onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+                >
+                  <TrendingUp size={24} />
+                  Calculate My Savings
+                </button>
+              </div>
             </div>
           ) : (
             <div>
